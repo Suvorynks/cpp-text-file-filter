@@ -1,0 +1,45 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+#define MAX_LINE_LENGTH 256
+
+int main() {
+    // Встановлення кодування для коректного виводу
+    setlocale(LC_ALL, "Ukrainian");
+
+    ifstream inputFile("file1.txt"); // Файл для читання
+    ofstream outputFile("file2.txt"); // Файл для запису
+
+    if (!inputFile.is_open()) {
+        cerr << "Помилка: не вдалося відкрити файл для читання (file1.txt)!" << endl;
+        return 1;
+    }
+
+    if (!outputFile.is_open()) {
+        cerr << "Помилка: не вдалося відкрити файл для запису (file2.txt)!" << endl;
+        inputFile.close();
+        return 1;
+    }
+
+    char line[MAX_LINE_LENGTH];
+    cout << "Розпочинаю обробку файлу..." << endl;
+
+    // Читання файлу по рядках
+    while (inputFile.getline(line, MAX_LINE_LENGTH)) {
+        // Тут можна додати будь-яку логіку фільтрації
+        // Наприклад, записуємо лише непусті рядки
+        if (strlen(line) > 0) {
+            outputFile << line << endl;
+        }
+    }
+
+    cout << "Обробка завершена. Результат збережено у file2.txt." << endl;
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
